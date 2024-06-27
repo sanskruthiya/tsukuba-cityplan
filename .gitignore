@@ -1,0 +1,6 @@
+dist/app/data/
+node_modules/
+tmp/
+package-lock.json
+webpack.config.js
+.DS_Store
