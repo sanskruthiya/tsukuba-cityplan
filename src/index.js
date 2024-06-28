@@ -14,7 +14,7 @@ descriptionContent += '<h1>茨城県つくば市の建物+用途地域図</h1>';
 descriptionContent += '<p class="tipstyle01">茨城県つくば市の3D都市モデルを使った建物と都市計画用途地域のマップです。</p>';
 descriptionContent += '<p class="tipstyle01">下記に示すデータを参照し、当サイト作成者が独自に加工したものとなります。</p>';
 descriptionContent += '<p class="tipstyle01">ご意見等は<a href="https://form.run/@party--1681740493" target="_blank">問い合わせフォーム（外部サービス）</a>からお知らせください。</p>';
-descriptionContent += '<hr><p class="remarks">地図描画ライブラリ：<a href="https://maplibre.org/">MapLibre</a><br>ベースマップ：<a href="https://www.openstreetmap.org/">OpenStreetMap</a> | <a href="https://maps.gsi.go.jp/development/ichiran.html">国土地理院</a><br>建物モデル・都市計画情報：<a href="https://www.geospatial.jp/ckan/dataset/plateau/">G空間情報センター(国土交通省PLATEAU)</a><br>国勢調査区 : <a href="https://www.e-stat.go.jp/gis">政府統計の総合窓口(e-Stat)</a><br>View code on <a href="https://github.com/sanskruthiya/tsukuba-cityplan">Github</a></p>';
+descriptionContent += '<hr><p class="remarks">地図描画ライブラリ：<a href="https://maplibre.org/">MapLibre</a><br>ベースマップ：<a href="https://www.openstreetmap.org/">OpenStreetMap</a> | <a href="https://maps.gsi.go.jp/development/ichiran.html">国土地理院</a><br>建物モデル・都市計画情報：<a href="https://www.geospatial.jp/ckan/dataset/plateau">G空間情報センター(国土交通省PLATEAU)</a><br>国勢調査区 : <a href="https://www.e-stat.go.jp/gis">政府統計の総合窓口(e-Stat)</a><br>View code on <a href="https://github.com/sanskruthiya/tsukuba-cityplan">Github</a></p>';
 descriptionBox.innerHTML = descriptionContent;
 
 function getDescription(d) {
@@ -200,6 +200,15 @@ map.on('load', function () {
             'fill-outline-color': '#1e90ff',
         }
     });
+    map.setSky({
+        "sky-color": "#199EF3",
+        "sky-horizon-blend": 0.7,
+        "horizon-color": "#f0f8ff",
+        "horizon-fog-blend": 0.8,
+        "fog-color": "#2c7fb8",
+        "fog-ground-blend": 0.9,
+        "atmosphere-blend": ["interpolate",["linear"],["zoom"],0,1,12,0]
+    });
 });
 
 map.on('click', 'boundary_area', function (e) {
@@ -218,7 +227,7 @@ map.on('click', 'boundary_area', function (e) {
     (fquery_02 !== "no-layer" ? '<br><span class="style01">' + fquery_02["name"]+'</span>の用途地域に該当し、建ぺい率：' + Number(fquery_02["buildingCoverageRate"])*100 + '%、容積率：' + Number(fquery_02["floorAreaRate"])*100 + '%、<span class="style01">'+ getDescription(fquery_02["name"]) +'</span>（ただし、さらに詳細な<a href="https://www.city.tsukuba.lg.jp/material/files/group/118/chikukeikaku20231220.pdf" target="_blank">地区計画</a>による規制が設定されている場合もあります。）' : '') +
     '</p><hr>'+'<p class="remarks"><a href="https://www.google.com/maps/@?api=1&map_action=map&center='+e.lngLat.wrap().lat.toFixed(5)+','+e.lngLat.wrap().lng.toFixed(5)+'&zoom=18" target="_blank">この地点のGoogleマップへのリンク</a></p>'
     
-    new maplibregl.Popup({closeButton:true, focusAfterOpen:false, className:'t-popup', maxWidth:'360px', anchor:'bottom'})
+    new maplibregl.Popup({closeButton:true, focusAfterOpen:false, className:'t-popup', maxWidth:'360px', anchor:'top'})
     .setLngLat(e.lngLat)
     .setHTML(popupContent)
     .addTo(map);
